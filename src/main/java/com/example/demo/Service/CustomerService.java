@@ -1,6 +1,5 @@
 package com.example.demo.Service;
 
-
 import java.util.List;
 import java.util.Optional;
 
@@ -13,84 +12,78 @@ import com.example.demo.responseStructure.ResponseStructure;
 
 @Service
 public class CustomerService {
-	
+
 	@Autowired
 	private Customerdao customerdao;
-	
 
-		public ResponseStructure<?> insertCustomer(Customer customer){
-			
+	public ResponseStructure<?> insertCustomer(Customer customer) {
+
 		Customer cust = customerdao.insertCustomer(customer);
-		
+
 		ResponseStructure<Customer> responseStructure = new ResponseStructure<>();
 		responseStructure.setData(cust);
-		responseStructure.setHttpStatus(HttpStatus.CREATED);  //201
-		
+		responseStructure.setHttpStatus(HttpStatus.CREATED); // 201
+
 		return responseStructure;
-		
+
 	}
 
-		public ResponseStructure<?> findALLCustomer() {
-			
-	    List<Customer> customerList  = customerdao.findAllCustomer();
-	    
-			ResponseStructure<List<Customer>> responseStructure = new ResponseStructure<>();
-			responseStructure.setData(customerList);
+	public ResponseStructure<?> findALLCustomer() {
+
+		List<Customer> customerList = customerdao.findAllCustomer();
+
+		ResponseStructure<List<Customer>> responseStructure = new ResponseStructure<>();
+		responseStructure.setData(customerList);
+		responseStructure.setHttpStatus(HttpStatus.OK);
+		return responseStructure;
+	}
+
+	public ResponseStructure<?> findCustById(int custid) {
+
+		Optional<Customer> findCustById = customerdao.findCustById(custid);
+
+		if (findCustById.isPresent()) {
+			ResponseStructure<Customer> responseStructure = new ResponseStructure<>();
+			Customer customer = findCustById.get();
+			responseStructure.setData(customer);
+			responseStructure.setHttpStatus(HttpStatus.OK);
+			return responseStructure;
+		} else {
+			ResponseStructure<String> responseStructure = new ResponseStructure<>();
+			responseStructure.setData("Customer Not Found");
 			responseStructure.setHttpStatus(HttpStatus.OK);
 			return responseStructure;
 		}
 
+	}
 
-		public ResponseStructure<?> findCustById(int custid) {
-			
-		  Optional<Customer> findCustById = customerdao.findCustById(custid);
-		  
-		  if(findCustById.isPresent()) {
-			  ResponseStructure<Customer> responseStructure = new ResponseStructure<>();
-			  Customer customer = findCustById.get();
-			  responseStructure.setData(customer);
-			  responseStructure.setHttpStatus(HttpStatus.OK);
-				return responseStructure;
-		  }
-		  else {
-			  ResponseStructure<String> responseStructure = new ResponseStructure<>();
-			  responseStructure.setData("Customer Not Found");
-			  responseStructure.setHttpStatus(HttpStatus.OK);
-				return responseStructure;
-		  }
-		  
-		}
-		
-		
-		public ResponseStructure<?> deleteCustomer(int custid){
-		 Customer customer =	customerdao.deleteCustomer(custid);
-		 
-		 ResponseStructure<Customer> responseStructure = new ResponseStructure<>();
-		 responseStructure.setData(customer);
-		 responseStructure.setHttpStatus(HttpStatus.OK);
-		 return responseStructure;
-		 
-		}
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
+	public ResponseStructure<?> deleteCustomer(int custid) {
+		Customer customer = customerdao.deleteCustomer(custid);
+
+		ResponseStructure<Customer> responseStructure = new ResponseStructure<>();
+		responseStructure.setData(customer);
+		responseStructure.setHttpStatus(HttpStatus.OK);
+		return responseStructure;
+
+	}
+
+	public ResponseStructure<?> updateCustomer(Customer customer) {
+		Customer customer1 = customerdao.updateCustomer(customer);
+
+		ResponseStructure<Customer> responseStructure = new ResponseStructure<>();
+		responseStructure.setData(customer1);
+		responseStructure.setHttpStatus(HttpStatus.OK);
+		return responseStructure;
+
+	}
+
+	public ResponseStructure<?> partupdate(int custid, long phno) {
+		Customer customer2 = customerdao.partupdate(custid, phno);
+
+		ResponseStructure<Customer> responseStructure = new ResponseStructure<>();
+		responseStructure.setData(customer2);
+		responseStructure.setHttpStatus(HttpStatus.OK);
+		return responseStructure;
+	}
+
 }

@@ -4,9 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.Service.CustomerService;
@@ -29,7 +32,6 @@ public class CustomerController {
 	}
 
 	
-	
 	@GetMapping( path = "/fetchAll")
 	public ResponseEntity<?> findAllCustomer(){
 		
@@ -38,7 +40,6 @@ public class CustomerController {
 		return new ResponseEntity<> (responseStructure , responseStructure.getHttpStatus());
 	}
 	
-	
 	@GetMapping( path = "/fetchById/{cusid}")
 	public ResponseEntity<?> findCustById(@PathVariable int cusid){
 		
@@ -46,7 +47,7 @@ public class CustomerController {
 		
 		return new ResponseEntity<> (responseStructure, responseStructure.getHttpStatus());
 	}
-	
+	 
 	@DeleteMapping(path = "/delete/{custid}")
 	public ResponseEntity<?> deleteCustomer(@PathVariable int custid){
 		ResponseStructure<?> responseStructure = customerService.deleteCustomer(custid);
@@ -54,6 +55,22 @@ public class CustomerController {
 		
 	}	
 	
+	//update the customer
+	//@putMapping-->update the complete resource
+	//@patchmapping-->partical update of the resource
 	
+	@PutMapping(path = "/update")
+	public ResponseEntity<?> updateCustomer(@RequestBody Customer customer){
+		ResponseStructure<?> responseStructure = customerService.updateCustomer(customer);
+		return new ResponseEntity<> (responseStructure,responseStructure.getHttpStatus());
+	}
 	
+	 
+	//when u want to update only one attribute
+	@PatchMapping(path = "/partialupdate/{phno}")
+	public ResponseEntity<?> partupdate(@RequestParam int custid , @RequestParam long phno){
+		
+		ResponseStructure<?> responseStructure = customerService.partupdate(custid,phno);
+		return new ResponseEntity<> (responseStructure, responseStructure.getHttpStatus());
+	}	
 }
