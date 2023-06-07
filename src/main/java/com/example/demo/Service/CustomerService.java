@@ -60,4 +60,37 @@ public class CustomerService {
 		  }
 		  
 		}
+		
+		
+		public ResponseStructure<?> deleteCustomer(int custid){
+		 Customer customer =	customerdao.deleteCustomer(custid);
+		 
+		 ResponseStructure<Customer> responseStructure = new ResponseStructure<>();
+		 responseStructure.setData(customer);
+		 responseStructure.setHttpStatus(HttpStatus.OK);
+		 return responseStructure;
+		 
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 }

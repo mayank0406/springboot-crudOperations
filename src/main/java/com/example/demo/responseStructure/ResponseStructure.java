@@ -20,5 +20,4 @@ public class ResponseStructure<T> {
 		this.httpStatus = httpStatus;
 	}
 	
-	
 }

@@ -5,8 +5,8 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
 import com.example.demo.dto.Customer;
+import com.example.demo.exception.CustomerIdNotFoundException;
 
 @Repository
 public class Customerdao {
@@ -32,6 +32,21 @@ public class Customerdao {
 
 		Optional<Customer> FindById = customerRepository.findById(custid);
 		return FindById;
+	}
+	
+	public Customer deleteCustomer(int custid)
+	{
+	Optional<Customer> findById = customerRepository.findById(custid);
+	
+	//if it is true
+	if(findById.isPresent())
+	{
+		customerRepository.deleteById(custid);
+		return findById.get();
+	}
+	else {		
+		throw new CustomerIdNotFoundException("Customer Id Not Found");
+	}
 	}
 
 	
